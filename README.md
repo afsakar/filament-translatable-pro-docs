@@ -35,6 +35,7 @@
 - `Translate And Copy Action`: An action for copying main locale values to other locales.
 - `Translate Field Action`: An action for translating a single field to other locales.
 - `Locale Switcher`: A handy action to update all translatable fields for different locales in a single click, allowing you to switch table columns with translatable values.
+- Auto detect translatable attributes from model.
 
 ## Installation
 
@@ -96,6 +97,8 @@ class AdminPanelProvider extends PanelProvider
                     ])
                     ->globalSwitcher(false) // You can disable the global switcher
                     ->renderHook(PanelsRenderHook::TOPBAR_START)
+                    ->suffixLocaleLabel(true) // Add suffix locale label globally
+                    ->prefixLocaleLabel(true) // Add prefix locale label globally
             ]);
     }
 }
@@ -200,11 +203,11 @@ class PostCommentsWidget extends BaseWidget
         $locales = FilamentTranslatablePro::getLocales();
 
         return [
-            BaseWidget\Stat::make('Total ('.FilamentTranslatablePro::getLocaleLabel($this->activeLocale, $this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->count())
+            BaseWidget\Stat::make('Total ('.FilamentTranslatablePro::getLocaleLabel($this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->count())
                 ->icon('heroicon-o-chat-bubble-left-right'),
-            BaseWidget\Stat::make('Published ('.FilamentTranslatablePro::getLocaleLabel($this->activeLocale, $this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->whereNotNull('published_at')->count())
+            BaseWidget\Stat::make('Published ('.FilamentTranslatablePro::getLocaleLabel($this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->whereNotNull('published_at')->count())
                 ->icon('heroicon-o-check-circle'),
-            BaseWidget\Stat::make('Unpublish ('.FilamentTranslatablePro::getLocaleLabel($this->activeLocale, $this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->whereNull('published_at')->count())
+            BaseWidget\Stat::make('Unpublish ('.FilamentTranslatablePro::getLocaleLabel($this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->whereNull('published_at')->count())
                 ->icon('heroicon-o-clock'),
         ];
     }
