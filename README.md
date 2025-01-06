@@ -22,6 +22,8 @@
 - [Actions](#actions)
     - [TranslateAndCopyAction](#translateandcopyaction)
     - [TranslateFieldAction](#translatefieldaction)
+- [Columns](#columns)
+    - [TranslationProgressColumn](#translationprogresscolumn)
 
 ## Introduction
 
@@ -396,6 +398,14 @@ TranslatableInput::make([
 ```
 
 Note: The `TranslateFieldAction` action doesn't work with the `Repeater` component.
+
+## Columns
+
+### TranslationProgressColumn
+
+The `TranslationProgressColumn` column displays the translation progress of a record. It's auto detect the translatable attributes from the model and calculate the progress for each locale.
+
+<img src="art/translation-progress.gif" />
 
 ## Contributing
 
