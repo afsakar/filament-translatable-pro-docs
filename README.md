@@ -99,8 +99,8 @@ class AdminPanelProvider extends PanelProvider
                     ])
                     ->globalSwitcher(false) // You can disable the global switcher
                     ->renderHook(PanelsRenderHook::TOPBAR_START)
-                    ->suffixLocaleLabel(true) // Add suffix locale label globally
-                    ->prefixLocaleLabel(true) // Add prefix locale label globally
+                    ->suffixLocale(true) // Add suffix locale label globally
+                    ->prefixLocale(true) // Add prefix locale label globally
             ]);
     }
 }
