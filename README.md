@@ -41,7 +41,7 @@
 
 ## Installation
 
-Filament Advanced Components uses AnyStack to handle payment, licensing, and distribution.
+Filament Translatable Pro uses AnyStack to handle payment, licensing, and distribution.
 
 To install you'll need to add the repository to your composer.json file:
 
@@ -55,7 +55,7 @@ To install you'll need to add the repository to your composer.json file:
     ]
 }
 ```
-Once the repository has been added to the composer.json file, you can install Filament Advanced Components like any other composer package using the composer require command:
+Once the repository has been added to the composer.json file, you can install Filament Translatable Pro like any other composer package using the composer require command:
 
 ```bash
 composer require afsakar/filament-translatable-pro
