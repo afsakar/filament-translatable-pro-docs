@@ -120,7 +120,7 @@ class AdminPanelProvider extends PanelProvider
                         'en' => 'English'
                     ])
                     ->globalSwitcher(false) // You can disable the global switcher
-                    ->renderHook(PanelsRenderHook::TOPBAR_START)
+                    ->renderHook(PanelsRenderHook::TOPBAR_START) // default is PanelsRenderHook::GLOBAL_SEARCH_AFTER
                     ->suffixLocale(true) // Add suffix locale label globally
                     ->prefixLocale(true) // Add prefix locale label globally
             ]);
