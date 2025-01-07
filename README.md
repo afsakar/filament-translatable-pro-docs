@@ -41,10 +41,32 @@
 
 ## Installation
 
-Install the package via Composer:
+Filament Advanced Components uses AnyStack to handle payment, licensing, and distribution.
+
+To install you'll need to add the repository to your composer.json file:
+
+```bash
+{
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://filament-translatable-pro.composer.sh"
+        }
+    ]
+}
+```
+Once the repository has been added to the composer.json file, you can install Filament Advanced Components like any other composer package using the composer require command:
 
 ```bash
 composer require afsakar/filament-translatable-pro
+```
+You will be prompted to provide your username and password. The username will be the email address and the password will be equal to your license key.
+
+```bash
+Loading composer repositories with package information
+Authentication required (filament-translatable-pro.composer.sh):
+Username: [licensee-email]
+Password: [license-key]
 ```
 
 Next, add the plugin's views to your custom theme in your `tailwind.config.js` file:
