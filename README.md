@@ -205,6 +205,25 @@ class EditPosts extends ListRecords
 }
 ```
 
+View Page;
+
+```php
+<?php
+
+namespace App\Filament\Resources\PostResource\Pages;
+
+use Afsakar\FilamentTranslatablePro\Resources\Pages\ViewRecord\Concerns\Translatable;
+use App\Filament\Resources\PostResource;
+use Filament\Resources\Pages\ViewRecord;
+
+class ViewPost extends ViewRecord
+{
+    use Translatable;
+
+    protected static string $resource = PostResource::class;
+}
+```
+
 PostCommentsWidget class;
 
 ```php
