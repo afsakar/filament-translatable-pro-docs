@@ -16,14 +16,17 @@
 - [Installation](#installation)
     - [Register the Plugin](#register-the-plugin)
 - [Usage](#usage)
-  - [Preparing Resources](#preparing-resources)
-  - [Using TranslatableInput](#using-translatableinput)
-  - [Specialized Use Cases](#specialized-use-cases)
+    - [Preparing Resources](#preparing-resources)
+    - [Using TranslatableInput](#using-translatableinput)
+    - [Specialized Use Cases](#specialized-use-cases)
 - [Actions](#actions)
     - [TranslateAndCopyAction](#translateandcopyaction)
     - [TranslateFieldAction](#translatefieldaction)
 - [Columns](#columns)
     - [TranslationProgressColumn](#translationprogresscolumn)
+- [Translation Status](#translation-status)
+    - [TranslationStatusResource](#translationstatusresource)
+    - [Translation Status Command](#translation-status-command)
 
 ## Introduction
 
@@ -291,7 +294,7 @@ TranslatableInput::make()
     ->locales(['tr', 'en'])
     ->prefixLocale()
     ->suffixLocale()
-    ->onlyMainLocaleRequired(force: true)
+    ->onlyMainLocaleRequired(condition: true, force: false) 
     ->onlyFlag(true)
     ->tabPosition('center')
     ->showTabs(false)
@@ -311,7 +314,7 @@ TranslatableInput::make()
 
 * `actions`: An array of actions to be added to the component.
 * `exclude`: An array of fields to be excluded from the component.
-* `onlyMainLocaleRequired`: Make only main locale required if component has required attribute. If force is true, make all components required for main locale.
+* `onlyMainLocaleRequired`: Make only main locale required if component has required attribute. If force is true, make all components required for main locale. (defaults: condition: true, force: false)
 * `onlyFlag`: Show only flag in the tab.
 * `tabPosition`: Tab position. `start`, `center`, `end`. Default is `end`.
 * `showTabs`: Show tabs. Default is `true`.
@@ -422,7 +425,7 @@ class EditPost extends EditRecord
 
 ### TranslateFieldAction
 
-The `TranslateFieldAction` allows you to translate a single field to other locales. 
+The `TranslateFieldAction` allows you to translate a single field to other locales.
 <img src="art/translate-action.gif" />
 
 ```php
@@ -447,6 +450,22 @@ Note: The `TranslateFieldAction` action doesn't work with the `Repeater` compone
 The `TranslationProgressColumn` column displays the translation progress of a record. It's auto detect the translatable attributes from the model and calculate the progress for each locale.
 
 <img src="art/translation-progress.gif" />
+
+## Translation Status
+
+The `TranslationStatusResource` lists the missing translation fields according to your models. If you wish, you can manually update the missing translations.
+
+<img src="art/translation-status.png" />
+
+### Translation Status Command
+
+This command calculates the translation status of a record. It's auto detect the translatable attributes from the model and calculate the status for each locale. You can run this command from the terminal.
+
+```bash
+php artisan translations:check --model=:ModelName --email=example@example.com
+```
+
+If you want to send email notification, you can use the `--email` option.
 
 ## Contributing
 
