@@ -126,6 +126,11 @@ class AdminPanelProvider extends PanelProvider
                     ->renderHook(PanelsRenderHook::TOPBAR_START) // default is PanelsRenderHook::GLOBAL_SEARCH_AFTER
                     ->suffixLocale(true) // Add suffix locale label globally
                     ->prefixLocale(true) // Add prefix locale label globally
+                    ->navigationTitle('Content Translations') // Navigation title for Missing Translations Resource
+                    ->navigationGroup('Content') // Navigation group for Missing Translations Resource
+                    ->navigationSort(1) // Navigation sort for Missing Translations Resource
+                    ->navigationIcon('heroicon-o-globe') // Navigation icon for Missing Translations Resource
+                    ->navigationSlug('content-translations') // Navigation slug for Missing Translations Resource
             ]);
     }
 }
