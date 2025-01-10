@@ -467,19 +467,6 @@ php artisan translations:check --model=:ModelName --email=example@example.com
 
 If you want to send email notification, you can use the `--email` option.
 
-## Contributing
-
-See [CONTRIBUTING](.github/CONTRIBUTING.md) for details on how to contribute.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) to report vulnerabilities.
-
-## Credits
-
-- [Azad Furkan ŞAKAR](https://github.com/afsakar)
-- [All Contributors](../../contributors)
-
 # Support
 
 If you have a question, bug or feature request, please e-mail me at afsakarr@gmail.com or tag @afsakar on #afsakar-translatable-pro on the Filament Discord. Love to hear from you!
