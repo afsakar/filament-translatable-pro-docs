@@ -349,7 +349,7 @@ public static function form(Form $form): Form
     return $form
         ->schema([
             TranslatableInput::make()
-                ->suffixLocaleLabel()
+                ->suffixLocale()
                 ->schema([
                     Forms\Components\Section::make('Title Section')
                         ->columnSpanFull()
