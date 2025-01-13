@@ -453,7 +453,21 @@ The `TranslationProgressColumn` column displays the translation progress of a re
 
 ## Translation Status
 
-The `TranslationStatusResource` lists the missing translation fields according to your models. If you wish, you can manually update the missing translations.
+First, you need to add `HasTranslationStatus` trait to your model. You can exclude the attributes from the translation status calculation by using the `exceptedTranslationStatusAttributes` method.
+
+```php
+use Afsakar\FilamentTranslatablePro\Traits\HasTranslationStatus;
+
+class Post extends Model
+{
+    use HasTranslationStatus;
+
+    public function exceptedTranslationStatusAttributes(): array
+    {
+        return ['slug'];
+    }
+}
+```
 
 <img src="https://github.com/afsakar/filament-translatable-pro-docs/blob/main/art/translation-status.png" />
 
