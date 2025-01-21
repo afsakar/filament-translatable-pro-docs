@@ -1,7 +1,7 @@
 # Filament Translatable Pro
 
 <center>
-<img src="https://github.com/afsakar/filament-translatable-pro-docs/blob/main/art/translatable-pro-cover.png" />
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translatable-pro-cover.png" />
 </center>
 
 ## Table of Contents
@@ -27,7 +27,7 @@
 
 **Filament Translatable Pro** is a powerful FilamentPHP plugin that enhances the [Spatie Translatable package](https://spatie.be/docs/laravel-translatable/) with advanced, user-friendly features. It streamlines multi-language management in FilamentPHP projects, enabling developers to build immersive, multilingual applications with ease.
 
-<img src="https://github.com/afsakar/filament-translatable-pro-docs/blob/main/art/translatable-input.png" />
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translatable-input.png" />
 
 ## Features
 
@@ -281,7 +281,7 @@ class CategoriesRelationManager extends RelationManager
 }
 ```
 
-<img src="https://github.com/afsakar/filament-translatable-pro-docs/blob/main/art/table.gif" />
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/table.gif" />
 
 ### Using TranslatableInput
 
@@ -334,7 +334,7 @@ TranslatableInput::make()
     ]);
 ```
 
-<img src="https://github.com/afsakar/filament-translatable-pro-docs/blob/main/art/form.gif" />
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/form.gif" />
 
 ### Specialized Use Cases
 
@@ -398,7 +398,7 @@ public static function form(Form $form): Form
 
 The `TranslateAndCopyAction` allows you to copy the main locale values to other locales.
 
-<img src="https://github.com/afsakar/filament-translatable-pro-docs/blob/main/art/translate-and-copy.gif" />
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translate-and-copy.gif" />
 
 ```php
 <?php
@@ -428,7 +428,7 @@ class EditPost extends EditRecord
 ### TranslateFieldAction
 
 The `TranslateFieldAction` allows you to translate a single field to other locales.
-<img src="https://github.com/afsakar/filament-translatable-pro-docs/blob/main/art/translate-action.gif" />
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translate-action.gif" />
 
 ```php
 use Afsakar\FilamentTranslatablePro\Actions\TranslateFieldAction;
@@ -451,7 +451,7 @@ Note: The `TranslateFieldAction` action doesn't work with the `Repeater` compone
 
 The `TranslationProgressColumn` column displays the translation progress of a record. It's auto detect the translatable attributes from the model and calculate the progress for each locale.
 
-<img src="https://github.com/afsakar/filament-translatable-pro-docs/blob/main/art/translation-progress.gif" />
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translation-progress.gif" />
 
 ## Translation Status
 
@@ -471,7 +471,7 @@ class Post extends Model
 }
 ```
 
-<img src="https://github.com/afsakar/filament-translatable-pro-docs/blob/main/art/translation-status.png" />
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translation-status.png" />
 
 ### Translation Status Command
 
