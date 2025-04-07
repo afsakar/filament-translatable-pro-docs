@@ -41,6 +41,8 @@
 
 Filament Translatable Pro uses AnyStack to handle payment, licensing, and distribution.
 
+You can get your license here: [FilamentPHP Translatable PRO](https://afsakar.lemonsqueezy.com/buy/ed73355b-bcb8-416c-a501-394bca7bc691)
+
 To install you'll need to add the repository to your composer.json file:
 
 ```bash
@@ -48,7 +50,7 @@ To install you'll need to add the repository to your composer.json file:
     "repositories": [
         {
             "type": "composer",
-            "url": "https://filament-translatable-pro.composer.sh"
+            "url": "https://satis.afsakar.com"
         }
     ]
 }
@@ -62,8 +64,8 @@ You will be prompted to provide your username and password. The username will be
 
 ```bash
 Loading composer repositories with package information
-Authentication required (filament-translatable-pro.composer.sh):
-Username: [licensee-email]
+Authentication required (satis.afsakar.com):
+Username: [license-email]
 Password: [license-key]
 ```
 
