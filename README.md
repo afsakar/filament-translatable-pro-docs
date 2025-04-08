@@ -41,7 +41,7 @@
 
 Filament Translatable Pro uses AnyStack to handle payment, licensing, and distribution.
 
-You can get your license here: [FilamentPHP Translatable PRO](https://afsakar.lemonsqueezy.com/buy/ed73355b-bcb8-416c-a501-394bca7bc691)
+You can get your license here: [FilamentPHP Translatable PRO](https://afsakar.lemonsqueezy.com/buy/15f04f47-2ed2-488e-afad-e13f55c1262f)
 
 To install you'll need to add the repository to your composer.json file:
 
