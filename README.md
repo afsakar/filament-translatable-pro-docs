@@ -527,10 +527,6 @@ TranslatableInput::make()
     ->onlyMainLocaleRequired(condition: true, force: false) 
     ->showFlags(true)
     ->excludeFields(['description'])
-    ->localesLabels([
-        'en' => 'English',
-        'tr' => 'Türkçe',
-    ])
     ->vertical()
     ->schema([
         Forms\Components\TextInput::make('name')->required(fn ($component) => $component->getMeta('locale') === 'tr'),
@@ -543,7 +539,6 @@ TranslatableInput::make()
 * `onlyMainLocaleRequired()`: Make only main locale required if component has required attribute. If force is true, make all components required for main locale. (defaults: condition: true, force: false)
 * `showFlags()`: Show flags in the tabs
 * `locales()`: An array of locale codes to be used in the component
-* `localesLabels()`: An associative array of locale codes and their labels
 * `vertical()`: Display the locale tabs vertically
 
 ```php
@@ -558,8 +553,14 @@ TranslatableInput::make()
         ]),
     ]);
 ```
-
+<center width="100%">Horizontal Layout</center>
+<center width="100%">
 <img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/form-new.gif" />
+</center>
+<center>Vertical Layout</center>
+<center width="100%">
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/vertical.png" />
+</center>
 
 ### Specialized Use Cases
 
