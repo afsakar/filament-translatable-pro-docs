@@ -38,8 +38,6 @@
 
 **Filament Translatable Pro V2** is a powerful FilamentPHP v4 plugin that enhances the [Spatie Translatable package](https://spatie.be/docs/laravel-translatable/) with advanced, user-friendly features. This major version introduces significant improvements, including enhanced translation management, better performance, and a more intuitive API design.
 
-BURAYA GÖRSEL GELECEK
-
 ## Features
 
 - **Enhanced TranslatableInput**: Improved multi-language management with better UX and performance
@@ -513,7 +511,7 @@ class CategoriesRelationManager extends RelationManager
 }
 ```
 
-BURAYA GÖRSEL GELECEK
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/table.gif" />
 
 ### Using TranslatableInput
 
@@ -561,7 +559,7 @@ TranslatableInput::make()
     ]);
 ```
 
-BURAYA GÖRSEL GELECEK
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/form.gif" />
 
 ### Specialized Use Cases
 
@@ -624,8 +622,6 @@ public static function form(Form $form): Form
 
 The `TranslateRecordAction` allows you to translate an entire record from one locale to another using automated translation services.
 
-BURAYA GÖRSEL GELECEK
-
 ```php
 <?php
 
@@ -654,8 +650,6 @@ class EditPost extends EditRecord
 ### TranslateContentAction
 
 The `TranslateContentAction` allows you to translate individual field content to other locales. This action can be used as a hint action on form fields.
-
-BURAYA GÖRSEL GELECEK
 
 ```php
 use Afsakar\FilamentTranslatablePro\Filament\Actions\TranslateContentAction;
@@ -695,7 +689,10 @@ protected function getHeaderActions(): array
 
 The `TranslationProgressColumn` displays the translation progress of a record. It automatically detects the translatable attributes from the model and calculates the progress for each locale.
 
-BURAYA GÖRSEL GELECEK
+<p align="center">
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translation-progress-column-bar.png" width="45%" />&nbsp;
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translation-progress-column-circle.png" width="45%" />
+</p>
 
 ```php
 use Afsakar\FilamentTranslatablePro\Filament\Columns\TranslationProgressColumn;
