@@ -767,12 +767,11 @@ Features:
 This command calculates the translation status of records. It automatically detects the translatable attributes from the model and calculates the status for each locale. You can run this command from the terminal.
 
 ```bash
-php artisan translations:check --model=Post --email=example@example.com
+php artisan translations:check --model=Post
 ```
 
 **Available options:**
 - `--model`: Specify the model class name to check (e.g., `Post`, `User`)
-- `--email`: Send email notification with results to specified address
 
 **Examples:**
 ```bash
@@ -781,9 +780,6 @@ php artisan translations:check
 
 # Check specific model
 php artisan translations:check --model=Post
-
-# Check and send email notification
-php artisan translations:check --model=Post --email=admin@example.com
 
 # Check multiple models (run command multiple times)
 php artisan translations:check --model=Post
