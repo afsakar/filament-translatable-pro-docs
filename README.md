@@ -7,6 +7,7 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Demo](#demo)
 - [Features](#features)
 - [Breaking Changes from V1](#breaking-changes-from-v1)
 - [Migration Guide](#migration-guide)
@@ -31,6 +32,16 @@
 ## Introduction
 
 **Filament Translatable Pro V2** is a powerful FilamentPHP v4 plugin that enhances the [Spatie Translatable package](https://spatie.be/docs/laravel-translatable/) with advanced, user-friendly features. This major version introduces significant improvements, including enhanced translation management, better performance, and a more intuitive API design.
+
+You can find the V1 documentation [here](https://github.com/afsakar/filament-translatable-pro-docs/tree/v1).
+
+## Demo:
+
+| URL                     | Username       | Password       |
+|-------------------------|----------------|----------------|
+| https://translatable-pro.afsakar.com | admin@example.com | password |
+
+_PS: Demo is reset every day at 05:00 AM UTC+3._
 
 ## Features
 
