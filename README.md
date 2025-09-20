@@ -1,4 +1,10 @@
-# Filament Translatable Pro
+# Filament Translatable Pro V2
+
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/afsakar/filament-translatable-pro.svg?style=flat-square)](https://packagist.org/packages/afsakar/filament-translatable-pro)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/afsakar/filament-translatable-pro/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/afsakar/filament-translatable-pro/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/afsakar/filament-translatable-pro/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/afsakar/filament-translatable-pro/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/afsakar/filament-translatable-pro.svg?style=flat-square)](https://packagist.org/packages/afsakar/filament-translatable-pro)
+
 
 <center>
 <img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translatable-pro-cover.png" />
@@ -8,6 +14,8 @@
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Breaking Changes from V1](#breaking-changes-from-v1)
+- [Migration Guide](#migration-guide)
 - [Installation](#installation)
     - [Register the Plugin](#register-the-plugin)
 - [Usage](#usage)
@@ -15,27 +23,224 @@
     - [Using TranslatableInput](#using-translatableinput)
     - [Specialized Use Cases](#specialized-use-cases)
 - [Actions](#actions)
-    - [TranslateAndCopyAction](#translateandcopyaction)
-    - [TranslateFieldAction](#translatefieldaction)
+    - [TranslateRecordAction](#translaterecordaction)
+    - [TranslateContentAction](#translatecontentaction)
+    - [CheckTranslationsAction](#checktranslationsaction)
 - [Columns](#columns)
     - [TranslationProgressColumn](#translationprogresscolumn)
+    - [TranslatedColumn](#translatedcolumn)
 - [Translation Status](#translation-status)
     - [TranslationStatusResource](#translationstatusresource)
     - [Translation Status Command](#translation-status-command)
+- [Support](#support)
 
 ## Introduction
 
-**Filament Translatable Pro** is a powerful FilamentPHP plugin that enhances the [Spatie Translatable package](https://spatie.be/docs/laravel-translatable/) with advanced, user-friendly features. It streamlines multi-language management in FilamentPHP projects, enabling developers to build immersive, multilingual applications with ease.
+**Filament Translatable Pro V2** is a powerful FilamentPHP v4 plugin that enhances the [Spatie Translatable package](https://spatie.be/docs/laravel-translatable/) with advanced, user-friendly features. This major version introduces significant improvements, including enhanced translation management, better performance, and a more intuitive API design.
 
-<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translatable-input.png" />
+BURAYA GÖRSEL GELECEK
 
 ## Features
 
-- `Translatable Input`: Simplifies multi-language management and localization within FilamentPHP projects.
-- `Translate And Copy Action`: An action for copying main locale values to other locales.
-- `Translate Field Action`: An action for translating a single field to other locales.
-- `Locale Switcher`: A handy action to update all translatable fields for different locales in a single click, allowing you to switch table columns with translatable values.
-- Auto detect translatable attributes from model.
+- **Enhanced TranslatableInput**: Improved multi-language management with better UX and performance
+- **Advanced Translation Actions**: New `TranslateRecordAction` and `TranslateContentAction` for comprehensive translation workflows
+- **Translation Status Tracking**: Advanced tracking and monitoring of translation completeness
+- **Smart Column Components**: `TranslatedColumn` and `TranslationProgressColumn` for better data display
+- **Improved Locale Switcher**: Enhanced global locale switching with multiple display modes
+- **Background Translation Jobs**: Asynchronous translation processing for better performance
+- **Email Notifications**: Get notified about missing translations and translation completion
+- **Auto-detection**: Automatically detect translatable attributes from models
+- **Flag Support**: Visual flags for better locale identification
+
+## Breaking Changes from V1
+
+### ⚠️ Important: V2 introduces several breaking changes. Please read this section carefully before upgrading.
+
+#### 1. Namespace Changes
+
+**Actions Namespace:**
+```php
+// V1
+use Afsakar\FilamentTranslatablePro\Actions\TranslateAndCopyAction;
+use Afsakar\FilamentTranslatablePro\Actions\TranslateFieldAction;
+
+// V2
+use Afsakar\FilamentTranslatablePro\Filament\Actions\TranslateRecordAction;
+use Afsakar\FilamentTranslatablePro\Filament\Actions\TranslateContentAction;
+```
+
+**Components Namespace:**
+```php
+// V1
+use Afsakar\FilamentTranslatablePro\Forms\Components\TranslatableInput;
+
+// V2
+use Afsakar\FilamentTranslatablePro\Filament\Components\TranslatableInput;
+```
+
+**Columns Namespace:**
+```php
+// V1
+use Afsakar\FilamentTranslatablePro\Columns\TranslationProgressColumn;
+
+// V2
+use Afsakar\FilamentTranslatablePro\Filament\Columns\TranslationProgressColumn;
+use Afsakar\FilamentTranslatablePro\Filament\Columns\TranslatedColumn; // New
+```
+
+#### 2. Plugin Configuration Changes
+
+**Removed Methods:**
+- `->renderHook()` - Global switcher location is now fixed
+- `->suffixLocale()` and `->prefixLocale()` - Now handled at component level
+- `->navigationTitle()`, `->navigationGroup()`, etc. - Now configured via config file
+
+**New Methods:**
+- `->localeSwitcherType()` - Choose between 'dropdown' and 'toggle'
+
+#### 3. Action Name Changes
+
+```php
+// V1
+TranslateAndCopyAction::make() // Renamed
+TranslateFieldAction::make()   // Renamed
+
+// V2
+TranslateRecordAction::make()  // New name
+TranslateContentAction::make() // New name
+```
+
+#### 4. Method Name Changes
+
+```php
+// V1
+TranslatableInput::make()
+    ->prefixLocale()    // Removed
+    ->suffixLocale()    // Removed
+    ->exclude()         // Renamed
+
+// V2
+TranslatableInput::make()
+    ->prefixLocaleLabel()   // New
+    ->suffixLocaleLabel()   // New
+    ->excludeFields()       // New name
+```
+
+#### 5. Facade Changes
+
+```php
+// V1
+use Afsakar\FilamentTranslatablePro\Facades\FilamentTranslatablePro;
+
+// V2
+use Afsakar\FilamentTranslatablePro\Facades\TranslatableProFacade;
+```
+
+## Migration Guide
+
+### Step 1: Update Namespaces
+
+Replace all old namespaces with new ones:
+
+```bash
+# Find and replace in your codebase:
+# Actions
+find . -name "*.php" -exec sed -i '' 's/use Afsakar\\FilamentTranslatablePro\\Actions\\/use Afsakar\\FilamentTranslatablePro\\Filament\\Actions\\/g' {} \;
+
+# Components
+find . -name "*.php" -exec sed -i '' 's/use Afsakar\\FilamentTranslatablePro\\Forms\\Components\\/use Afsakar\\FilamentTranslatablePro\\Filament\\Components\\/g' {} \;
+
+# Columns
+find . -name "*.php" -exec sed -i '' 's/use Afsakar\\FilamentTranslatablePro\\Columns\\/use Afsakar\\FilamentTranslatablePro\\Filament\\Columns\\/g' {} \;
+
+# Facades
+find . -name "*.php" -exec sed -i '' 's/use Afsakar\\FilamentTranslatablePro\\Facades\\FilamentTranslatablePro/use Afsakar\\FilamentTranslatablePro\\Facades\\TranslatableProFacade/g' {} \;
+```
+
+### Step 2: Update Action Names
+
+```php
+// Replace these action calls:
+TranslateAndCopyAction::make() // Change to TranslateRecordAction::make()
+TranslateFieldAction::make()   // Change to TranslateContentAction::make()
+```
+
+### Step 3: Update Plugin Configuration
+
+```php
+// V1 Configuration (Remove these)
+FilamentTranslatableProPlugin::make()
+    ->renderHook(PanelsRenderHook::TOPBAR_START)          // Remove
+    ->suffixLocale(true)                                   // Remove
+    ->prefixLocale(true)                                   // Remove
+    ->navigationTitle('Content Translations')             // Remove
+    ->navigationGroup('Content')                           // Remove
+    ->navigationSort(1)                                    // Remove
+    ->navigationIcon('heroicon-o-globe')                   // Remove
+    ->navigationSlug('content-translations');             // Remove
+
+// V2 Configuration (Use this)
+FilamentTranslatableProPlugin::make()
+    ->locales([
+        'tr' => 'Türkçe',
+        'en' => 'English'
+    ])
+    ->globalSwitcher(true)
+    ->localeSwitcherType('dropdown'); // New: 'dropdown' or 'toggle'
+```
+
+### Step 4: Update Component Methods
+
+```php
+// V1
+TranslatableInput::make()
+    ->prefixLocale() // Deprecated
+    ->suffixLocale() // Deprecated
+    ->exclude(['description']);
+
+// V2
+TranslatableInput::make()
+    ->localesLabels([
+        'en' => 'English',
+        'tr' => 'Türkçe',
+    ])
+    ->excludeFields(['description']);
+```
+
+### Step 5: Update Configuration File
+
+Publish and update the config file:
+
+```bash
+php artisan vendor:publish --tag="filament-translatable-pro-config" --force
+```
+
+Update your config file:
+
+```php
+// config/filament-translatable-pro.php
+return [
+    'locales' => ['en', 'tr'],
+
+    // New configuration section
+    'translation_status' => [
+        'navigation_group' => 'Content',
+        'navigation_icon' => 'heroicon-o-language',
+        'model_label' => 'Translation Status',
+        'navigation_label' => 'Translation Status',
+        'slug' => 'translation-statuses',
+        'sort' => 99,
+    ],
+];
+```
+
+### Step 6: Run Migrations
+
+V2 includes new database tables:
+
+```bash
+php artisan migrate
+```
 
 ## Installation
 
@@ -55,11 +260,13 @@ To install you'll need to add the repository to your composer.json file:
     ]
 }
 ```
+
 Once the repository has been added to the composer.json file, you can install Filament Translatable Pro like any other composer package using the composer require command:
 
 ```bash
 composer require afsakar/filament-translatable-pro
 ```
+
 You will be prompted to provide your username and password. The username will be the email address and the password will be equal to your license key.
 
 ```bash
@@ -69,16 +276,16 @@ Username: [license-email]
 Password: [license-key]
 ```
 
-Next, add the plugin's views to your custom theme in your `tailwind.config.js` file:
+Next, add the plugin's views to your custom theme in your `theme.css` file:
 
 > **Important**  
-> If you haven’t set up a custom theme and are using a Panel, follow the instructions in the [Filament Docs](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) first. This setup applies to both the Panels and standalone Forms packages.
+> If you haven't set up a custom theme and are using a Panel, follow the instructions in the [Filament Docs](https://filamentphp.com/docs/4.x/panels/themes#creating-a-custom-theme) first. This setup applies to both the Panels and standalone Forms packages.
 
-```js
-content: [
-    ...
-    '<path-to-vendor>/afsakar/filament-translatable-pro/resources/**/*.blade.php',
-]
+```css
+@import '../your/vendor/path/translatable-pro/resources/css/index.css';
+
+
+@source '../your/vendor/path/afsakar/filament-translatable-pro/resources/views/**/*';
 ```
 
 Afterward, run `npm run build` or `yarn build` to compile assets.
@@ -89,11 +296,20 @@ Publish the configuration file if needed:
 php artisan vendor:publish --tag="filament-translatable-pro-config"
 ```
 
-In the published config file, you can define the available locales:
+In the published config file, you can define the available locales and translation status settings:
 
 ```php
 return [
     'locales' => ['tr', 'en'],
+    
+    'translation_status' => [
+        'navigation_group' => 'Content',
+        'navigation_icon' => 'heroicon-o-language',
+        'model_label' => 'Translation Status',
+        'navigation_label' => 'Translation Status',
+        'slug' => 'translation-statuses',
+        'sort' => 99,
+    ],
 ];
 ```
 
@@ -101,6 +317,12 @@ Optionally, publish translations using:
 
 ```bash
 php artisan vendor:publish --tag="filament-translatable-pro-translations"
+```
+
+Run the migrations:
+
+```bash
+php artisan migrate
 ```
 
 ### Register the Plugin
@@ -119,15 +341,8 @@ class AdminPanelProvider extends PanelProvider
                         'tr' => 'Türkçe',
                         'en' => 'English'
                     ])
-                    ->globalSwitcher(false) // You can disable the global switcher
-                    ->renderHook(PanelsRenderHook::TOPBAR_START) // default is PanelsRenderHook::GLOBAL_SEARCH_AFTER
-                    ->suffixLocale(true) // Add suffix locale label globally
-                    ->prefixLocale(true) // Add prefix locale label globally
-                    ->navigationTitle('Content Translations') // Navigation title for Missing Translations Resource
-                    ->navigationGroup('Content') // Navigation group for Missing Translations Resource
-                    ->navigationSort(1) // Navigation sort for Missing Translations Resource
-                    ->navigationIcon('heroicon-o-globe') // Navigation icon for Missing Translations Resource
-                    ->navigationSlug('content-translations') // Navigation slug for Missing Translations Resource
+                    ->globalSwitcher(true) // Enable/disable the global switcher
+                    ->localeSwitcherType('dropdown') // 'dropdown' or 'toggle'
             ]);
     }
 }
@@ -172,19 +387,20 @@ class ListPosts extends ListRecords
 }
 ```
 
-Edit Page;
+Edit Page:
 
 ```php
 <?php
 
 namespace App\Filament\Resources\PostResource\Pages;
 
-use Afsakar\FilamentTranslatablePro\Actions\TranslateAndCopyAction;
+use Afsakar\FilamentTranslatablePro\Filament\Actions\TranslateRecordAction;
 use Afsakar\FilamentTranslatablePro\Resources\Pages\EditRecords\Concerns\Translatable;
 use App\Filament\Resources\PostResource;
-use Filament\Resources\Pages\ListRecords;
+use Filament\Actions;
+use Filament\Resources\Pages\EditRecord;
 
-class EditPosts extends ListRecords
+class EditPost extends EditRecord
 {
     use Translatable;
 
@@ -193,7 +409,7 @@ class EditPosts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            TranslateAndCopyAction::make(),
+            TranslateRecordAction::make(),
             Actions\DeleteAction::make(),
         ];
     }
@@ -210,7 +426,7 @@ class EditPosts extends ListRecords
 }
 ```
 
-View Page;
+View Page:
 
 ```php
 <?php
@@ -229,14 +445,33 @@ class ViewPost extends ViewRecord
 }
 ```
 
-PostCommentsWidget class;
+Create Page:
+
+```php
+<?php
+
+namespace App\Filament\Resources\PostResource\Pages;
+
+use Afsakar\FilamentTranslatablePro\Resources\Pages\CreateRecord\Concerns\Translatable;
+use App\Filament\Resources\PostResource;
+use Filament\Resources\Pages\CreateRecord;
+
+class CreatePost extends CreateRecord
+{
+    use Translatable;
+
+    protected static string $resource = PostResource::class;
+}
+```
+
+PostCommentsWidget class:
 
 ```php
 <?php
 
 namespace App\Filament\Resources\PostResource\Widgets;
 
-use Afsakar\FilamentTranslatablePro\Facades\FilamentTranslatablePro;
+use Afsakar\FilamentTranslatablePro\Facades\TranslatableProFacade;
 use Afsakar\FilamentTranslatablePro\Resources\Widgets\Concerns\Translatable;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
@@ -248,20 +483,17 @@ class PostCommentsWidget extends BaseWidget
 
     protected function getStats(): array
     {
-        $locales = FilamentTranslatablePro::getLocales();
-
         return [
-            BaseWidget\Stat::make('Total ('.FilamentTranslatablePro::getLocaleLabel($this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->count())
+            BaseWidget\Stat::make('Total ('.TranslatableProFacade::getLocaleLabel($this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->count())
                 ->icon('heroicon-o-chat-bubble-left-right'),
-            BaseWidget\Stat::make('Published ('.FilamentTranslatablePro::getLocaleLabel($this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->whereNotNull('published_at')->count())
+            BaseWidget\Stat::make('Published ('.TranslatableProFacade::getLocaleLabel($this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->whereNotNull('published_at')->count())
                 ->icon('heroicon-o-check-circle'),
-            BaseWidget\Stat::make('Unpublish ('.FilamentTranslatablePro::getLocaleLabel($this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->whereNull('published_at')->count())
+            BaseWidget\Stat::make('Unpublish ('.TranslatableProFacade::getLocaleLabel($this->activeLocale).')', $this->record->comments->where('locale', $this->activeLocale)->whereNull('published_at')->count())
                 ->icon('heroicon-o-clock'),
         ];
     }
 }
 ```
-
 
 For resources with relationships, include the `Translatable` trait in the related Resource Form Page:
 
@@ -281,48 +513,43 @@ class CategoriesRelationManager extends RelationManager
 }
 ```
 
-<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/table.gif" />
+BURAYA GÖRSEL GELECEK
 
 ### Using TranslatableInput
 
 The `TranslatableInput` component supports multi-language input fields in Filament forms:
 
 ```php
-use Afsakar\FilamentTranslatablePro\Forms\Components\TranslatableInput;
+use Afsakar\FilamentTranslatablePro\Filament\Components\TranslatableInput;
 use Filament\Forms;
 use Filament\Actions\Action;
 
 TranslatableInput::make()
     ->locales(['tr', 'en'])
-    ->prefixLocale()
-    ->suffixLocale()
     ->onlyMainLocaleRequired(condition: true, force: false) 
-    ->onlyFlag(true)
-    ->tabPosition('center')
-    ->showTabs(false)
-    ->actions([
-        Action::make('fill_with_dump')
-            ->action(function (array $arguments) {
-                $locale = $arguments['locale'];
-                // ...
-            })
+    ->showFlags(true)
+    ->excludeFields(['description'])
+    ->localesLabels([
+        'en' => 'English',
+        'tr' => 'Türkçe',
     ])
-    ->exclude(['description'])
-    ->schema(fn (string $locale) => [
-        Forms\Components\TextInput::make('name')->required($locale === 'tr'),
-        Forms\Components\Textarea::make('description')->required($locale === 'tr'),
+    ->vertical()
+    ->schema([
+        Forms\Components\TextInput::make('name')->required(fn ($component) => $component->getMeta('locale') === 'tr'),
+        Forms\Components\Textarea::make('description')->required(fn ($component) => $component->getMeta('locale') === 'tr'),
     ]);
 ```
 
-* `actions`: An array of actions to be added to the component.
-* `exclude`: An array of fields to be excluded from the component.
-* `onlyMainLocaleRequired`: Make only main locale required if component has required attribute. If force is true, make all components required for main locale. (defaults: condition: true, force: false)
-* `onlyFlag`: Show only flag in the tab.
-* `tabPosition`: Tab position. `start`, `center`, `end`. Default is `end`.
-* `showTabs`: Show tabs. Default is `true`.
+**Available Methods:**
+* `excludeFields()`: An array of fields to be excluded from the component
+* `onlyMainLocaleRequired()`: Make only main locale required if component has required attribute. If force is true, make all components required for main locale. (defaults: condition: true, force: false)
+* `showFlags()`: Show flags in the tabs
+* `locales()`: An array of locale codes to be used in the component
+* `localesLabels()`: An associative array of locale codes and their labels
+* `vertical()`: Display the locale tabs vertically
 
 ```php
-use Afsakar\FilamentTranslatablePro\Forms\Components\TranslatableInput;
+use Afsakar\FilamentTranslatablePro\Filament\Components\TranslatableInput;
 use Filament\Forms;
 
 TranslatableInput::make()
@@ -334,16 +561,16 @@ TranslatableInput::make()
     ]);
 ```
 
-<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/form.gif" />
+BURAYA GÖRSEL GELECEK
 
 ### Specialized Use Cases
 
 Get the current locale of a component with `getMeta('locale')`:
 
 ```php
-use Afsakar\FilamentTranslatablePro\Facades\FilamentTranslatablePro;
-use Afsakar\FilamentTranslatablePro\Actions\TranslateFieldAction;
-use Afsakar\FilamentTranslatablePro\Forms\Components\TranslatableInput;
+use Afsakar\FilamentTranslatablePro\Facades\TranslatableProFacade;
+use Afsakar\FilamentTranslatablePro\Filament\Actions\TranslateContentAction;
+use Afsakar\FilamentTranslatablePro\Filament\Components\TranslatableInput;
 use Filament\Forms;
 
 public static function form(Form $form): Form
@@ -351,7 +578,6 @@ public static function form(Form $form): Form
     return $form
         ->schema([
             TranslatableInput::make()
-                ->suffixLocale()
                 ->schema([
                     Forms\Components\Section::make('Title Section')
                         ->columnSpanFull()
@@ -359,7 +585,7 @@ public static function form(Form $form): Form
                         ->schema([
                             Forms\Components\TextInput::make('title')
                                 ->live(true)
-                                ->hintAction(TranslateFieldAction::make())
+                                ->hintAction(TranslateContentAction::make())
                                 ->afterStateUpdated(function ($state, $set, $context, $component) {
                                     if ($context === 'edit') {
                                         return;
@@ -378,10 +604,10 @@ public static function form(Form $form): Form
                     Forms\Components\Section::make()
                         ->schema([
                             Forms\Components\FileUpload::make('image')->lazy(),
-                            Forms\Components\RichEditor::make('content')->hintAction(TranslateFieldAction::make()),
+                            Forms\Components\RichEditor::make('content')->hintAction(TranslateContentAction::make()),
                             Forms\Components\Repeater::make('optional')
                                 ->label('Optional')
-                                ->addActionLabel(fn($component) => 'Add Optional (' . FilamentTranslatablePro::getLocaleLabel($component->getMeta('locale')) . ')')
+                                ->addActionLabel(fn($component) => 'Add Optional (' . TranslatableProFacade::getLocaleLabel($component->getMeta('locale')) . ')')
                                 ->schema([
                                     Forms\Components\TextInput::make('key'),
                                     Forms\Components\TextInput::make('value'),
@@ -394,18 +620,18 @@ public static function form(Form $form): Form
 
 ## Actions
 
-### TranslateAndCopyAction
+### TranslateRecordAction
 
-The `TranslateAndCopyAction` allows you to copy the main locale values to other locales.
+The `TranslateRecordAction` allows you to translate an entire record from one locale to another using automated translation services.
 
-<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translate-and-copy.gif" />
+BURAYA GÖRSEL GELECEK
 
 ```php
 <?php
 
 namespace App\Filament\Resources\PostResource\Pages;
 
-use Afsakar\FilamentTranslatablePro\Actions\TranslateAndCopyAction;
+use Afsakar\FilamentTranslatablePro\Filament\Actions\TranslateRecordAction;
 use App\Filament\Resources\PostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -417,72 +643,175 @@ class EditPost extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            TranslateAndCopyAction::make()
-                ->except(['slug']),
+            TranslateRecordAction::make()
+                ->excepts(['slug']), // Exclude specific fields from translation
             Actions\DeleteAction::make(),
         ];
     }
 }
 ```
 
-### TranslateFieldAction
+### TranslateContentAction
 
-The `TranslateFieldAction` allows you to translate a single field to other locales.
-<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translate-action.gif" />
+The `TranslateContentAction` allows you to translate individual field content to other locales. This action can be used as a hint action on form fields.
+
+BURAYA GÖRSEL GELECEK
 
 ```php
-use Afsakar\FilamentTranslatablePro\Actions\TranslateFieldAction;
-use Afsakar\FilamentTranslatablePro\Forms\Components\TranslatableInput;
+use Afsakar\FilamentTranslatablePro\Filament\Actions\TranslateContentAction;
+use Afsakar\FilamentTranslatablePro\Filament\Components\TranslatableInput;
 use Filament\Forms;
 
-TranslatableInput::make([
-    Forms\Components\Group::make(
-        TranslatableInput::make([
-            TinyEditor::make('content')->label('İçerik')->hintAction(TranslateAction::make()), // Add the TranslateAction to the hintAction
-        ])->onlyMainLocaleRequired(),
-    );
+TranslatableInput::make()
+    ->schema([
+        Forms\Components\RichEditor::make('content')
+            ->hintAction(TranslateContentAction::make()),
+        Forms\Components\TextInput::make('title')
+            ->hintAction(TranslateContentAction::make()),
+    ]);
 ```
 
-Note: The `TranslateFieldAction` action doesn't work with the `Repeater` component.
+**Note:** The `TranslateContentAction` action doesn't work with the `Repeater` component.
+
+### CheckTranslationsAction
+
+The `CheckTranslationsAction` allows you to check and update translation status for specific models. This is useful for monitoring translation completeness across your application.
+
+```php
+use Afsakar\FilamentTranslatablePro\Filament\Actions\CheckTranslationsAction;
+
+// Use in table header actions
+protected function getHeaderActions(): array
+{
+    return [
+        CheckTranslationsAction::make(),
+    ];
+}
+```
 
 ## Columns
 
 ### TranslationProgressColumn
 
-The `TranslationProgressColumn` column displays the translation progress of a record. It's auto detect the translatable attributes from the model and calculate the progress for each locale.
+The `TranslationProgressColumn` displays the translation progress of a record. It automatically detects the translatable attributes from the model and calculates the progress for each locale.
 
-<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translation-progress.gif" />
+BURAYA GÖRSEL GELECEK
+
+```php
+use Afsakar\FilamentTranslatablePro\Filament\Columns\TranslationProgressColumn;
+
+public static function table(Table $table): Table
+{
+    return $table
+        ->columns([
+            Tables\Columns\TextColumn::make('title'),
+            TranslationProgressColumn::make('translation_progress')
+                ->label('Translation Progress'),
+            // or use circle style
+            TranslationProgressColumn::make('translation_progress')
+                ->label('Translation Progress')
+                ->circle(),
+        ]);
+}
+```
+
+### TranslatedColumn
+
+The `TranslatedColumn` automatically displays translated content based on the current active locale. It intelligently handles both translatable and non-translatable fields, including relationships.
+
+```php
+use Afsakar\FilamentTranslatablePro\Filament\Columns\TranslatedColumn;
+
+public static function table(Table $table): Table
+{
+    return $table
+        ->columns([
+            TranslatedColumn::make('title'), // Will show translated title based on active locale
+            TranslatedColumn::make('category.name'), // Works with relationships too
+            Tables\Columns\TextColumn::make('created_at'),
+        ]);
+}
+```
 
 ## Translation Status
 
-First, you need to add `HasTranslationStatus` trait to your model. You can exclude the attributes from the translation status calculation by using the `exceptedTranslationStatusAttributes` method.
+### Setting Up Translation Status
+
+First, you need to add the `HasTranslationStatus` trait to your models. You can exclude specific attributes from the translation status calculation by using the `exceptedTranslationStatusAttributes` method.
 
 ```php
-use Afsakar\FilamentTranslatablePro\Traits\HasTranslationStatus;
+use Afsakar\FilamentTranslatablePro\Concerns\InteractsWithTranslationStatus;
 
 class Post extends Model
 {
-    use HasTranslationStatus;
+    use InteractsWithTranslationStatus;
 
     public function exceptedTranslationStatusAttributes(): array
     {
-        return ['slug'];
+        return ['slug']; // These fields won't be considered in translation status
     }
 }
 ```
 
-<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translation-status.png" />
+BURAYA GÖRSEL GELECEK
+
+### TranslationStatusResource
+
+The Translation Status Resource provides a comprehensive view of all translation statuses across your application. You can access it through the navigation menu (configurable in the config file).
+
+Features:
+- View all models and their translation status
+- Filter by model type, language, and translation status
+- Bulk actions to update translation statuses
+- Export translation status reports
 
 ### Translation Status Command
 
-This command calculates the translation status of a record. It's auto detect the translatable attributes from the model and calculate the status for each locale. You can run this command from the terminal.
+This command calculates the translation status of records. It automatically detects the translatable attributes from the model and calculates the status for each locale. You can run this command from the terminal.
 
 ```bash
-php artisan translations:check --model=:ModelName --email=example@example.com
+php artisan translations:check --model=Post --email=example@example.com
 ```
 
-If you want to send email notification, you can use the `--email` option.
+**Available options:**
+- `--model`: Specify the model class name to check (e.g., `Post`, `User`)
+- `--email`: Send email notification with results to specified address
 
-# Support
+**Examples:**
+```bash
+# Check all models
+php artisan translations:check
+
+# Check specific model
+php artisan translations:check --model=Post
+
+# Check and send email notification
+php artisan translations:check --model=Post --email=admin@example.com
+
+# Check multiple models (run command multiple times)
+php artisan translations:check --model=Post
+php artisan translations:check --model=Category
+```
+
+The command will:
+1. Scan all translatable attributes for the specified model(s)
+2. Check translation completeness for each locale
+3. Update the translation status database
+4. Send email notifications if requested
+
+## Support
 
 If you have a question, bug or feature request, please e-mail me at afsakarr@gmail.com or tag @afsakar on #afsakar-translatable-pro on the Filament Discord. Love to hear from you!
+
+## License
+
+This package is licensed under the MIT License. See the LICENSE file for details.
+
+## Credits
+
+- [Azad Furkan Şakar](https://github.com/afsakar)
+- [All Contributors](../../contributors)
+
+## Security
+
+If you discover any security related issues, please email afsakarr@gmail.com instead of using the issue tracker.
