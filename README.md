@@ -198,10 +198,6 @@ TranslatableInput::make()
 
 // V2
 TranslatableInput::make()
-    ->localesLabels([
-        'en' => 'English',
-        'tr' => 'Türkçe',
-    ])
     ->excludeFields(['description']);
 ```
 
