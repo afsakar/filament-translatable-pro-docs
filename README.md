@@ -511,7 +511,7 @@ class CategoriesRelationManager extends RelationManager
 }
 ```
 
-<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/table.gif" />
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/table-new.gif" />
 
 ### Using TranslatableInput
 
@@ -559,7 +559,7 @@ TranslatableInput::make()
     ]);
 ```
 
-<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/form.gif" />
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/form-new.gif" />
 
 ### Specialized Use Cases
 
@@ -750,7 +750,7 @@ class Post extends Model
 }
 ```
 
-BURAYA GÖRSEL GELECEK
+<img src="https://raw.githubusercontent.com/afsakar/filament-translatable-pro-docs/refs/heads/main/art/translation-status-new.png" />
 
 ### TranslationStatusResource
 
