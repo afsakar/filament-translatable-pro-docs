@@ -7,7 +7,6 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Demo](#demo)
 - [Features](#features)
 - [Breaking Changes from V1](#breaking-changes-from-v1)
 - [Migration Guide](#migration-guide)
@@ -27,21 +26,13 @@
 - [Translation Status](#translation-status)
     - [TranslationStatusResource](#translationstatusresource)
     - [Translation Status Command](#translation-status-command)
+    - [Missing Translation Keys Command](#missing-translation-keys-command)
+    - [Translation Manager](#translation-manager)
 - [Support](#support)
 
 ## Introduction
 
 **Filament Translatable Pro V2** is a powerful FilamentPHP v4 plugin that enhances the [Spatie Translatable package](https://spatie.be/docs/laravel-translatable/) with advanced, user-friendly features. This major version introduces significant improvements, including enhanced translation management, better performance, and a more intuitive API design.
-
-You can find the V1 documentation [here](https://github.com/afsakar/filament-translatable-pro-docs/tree/v1).
-
-## Demo:
-
-| URL                     | Username       | Password       |
-|-------------------------|----------------|----------------|
-| https://translatable-pro.afsakar.com | admin@example.com | password |
-
-_PS: Demo is reset every day at 05:00 AM UTC+3._
 
 ## Features
 
@@ -793,6 +784,74 @@ The command will:
 2. Check translation completeness for each locale
 3. Update the translation status database
 4. Send email notifications if requested
+
+### Missing Translation Keys Command
+
+Scan application paths for literal translation keys and write missing keys to the fallback locale JSON file.
+
+```bash
+php artisan translatable-pro:scan-missing-keys
+```
+
+By default, the command scans `app_path()` and `resource_path('views')`. You can override paths and excludes in the config file, or per command:
+
+```bash
+php artisan translatable-pro:scan-missing-keys \
+    --path=app/Filament \
+    --path=resources/views \
+    --exclude=resources/views/vendor \
+    --locale=en \
+    --dry-run
+```
+
+It detects literal keys used with `__()`, `trans()`, `trans_choice()`, `@lang()`, `Lang::get()`, and direct translator `get()` calls. Dynamic keys and package namespace keys such as `vendor::file.key` are skipped.
+
+### Translation Manager
+
+The plugin registers a Filament page for editing JSON and PHP language files from the panel.
+
+```php
+// config/filament-translatable-pro.php
+'translation_manager' => [
+    'enabled' => true,
+    'navigation_group' => null,
+    'navigation_icon' => 'heroicon-o-queue-list',
+    'navigation_label' => null,
+    'slug' => 'translation-manager',
+    'sort' => 100,
+    'base_path' => lang_path(),
+    'custom_path' => base_path('lang-custom'),
+    'exclude' => [
+        '*/validation.php',
+        '*/passwords.php',
+    ],
+    'per_page_options' => [25, 50, 100],
+],
+```
+
+Values saved from the manager are written to `lang-custom`. At runtime, `lang-custom` values override the normal `lang` values, while missing custom values fall back to the original language files. The manager supports:
+
+- JSON files such as `lang/en.json`
+- PHP group files such as `lang/en/messages.php`
+- `lang-custom` overrides for both JSON and PHP files
+- file type, search, locale, and missing translation filters
+- nullable locale filtering, so all locales can be shown together
+- missing translation detection across all configured locales
+- excluded language files by path pattern, such as `*/validation.php`
+- paginated editing with configurable per-page options
+
+The page UI text is translatable through `resources/lang/*/translatable-pro.php` under the `translation_manager` key.
+
+## Quality / Testing
+
+Install dependencies and run the package checks before opening a pull request:
+
+```bash
+composer install
+composer test
+composer phpstan
+vendor/bin/pint --test
+```
 
 ## Support
 
